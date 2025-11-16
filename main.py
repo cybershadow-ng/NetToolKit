@@ -1,4 +1,4 @@
-import class_main, os, sys, socket, json, threading
+import class_main, os, sys, socket, json, threading, time
 
 #Seleção do menu
 while True:
@@ -33,8 +33,10 @@ while True:
                 chatlocal.cliente()
             elif opc_chat == 99:
                 break
-            else:
-                input("Esta opção não está disponível..")
+            elif opc_chat not in ["1", "2", "99"]:
+                print("\033[F", end="")  
+                print(f"Esta opção não está disponível..")
+                time.sleep(2)
     elif opc_menu == 2:
         while True:
             os.system("clear")
@@ -59,8 +61,10 @@ while True:
                 all_sub.all_sub()
             elif opc_sub == 99:
                 break
-            else:
-                input("Esta opção não esta disponível!")
+            elif opc_sub not in ["1", "2", "3", "99"]:
+                print("\033[F", end="")  
+                print(f"Esta opção não está disponível..")
+                time.sleep(2)
     
 
 
@@ -92,12 +96,15 @@ while True:
                 synscan.syn_scan()
             elif opc_scan == 99:
                 break
-            else:
-                input("Esta opção não está disponível")
-    
+            elif opc_scan not in ["1", "2", "3", "99"]:
+                print("\033[F", end="")  
+                print(f"Esta opção não está disponível..")
+                time.sleep(2)
     
     elif opc_menu == 99:
         os.system("clear")
         exit()
-    else:
-        input("Esta opção não está disponível")
+    elif opc_menu not in ["1", "2", "3", "99"]:
+        print("\033[F", end="")  
+        print(f"Esta opção não está disponível..")
+        time.sleep(2)
