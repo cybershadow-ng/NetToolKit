@@ -1,7 +1,7 @@
 from scapy.all import IP, TCP, sr, L3RawSocket, conf, RandShort #type:ignore
 import socket, os, sys, getpass, json, threading
 import dns.resolver #type:ignore
-
+import requests #type:ignore
 class chatlocal:
 	def servidor():
 		os.system("clear")
@@ -314,4 +314,77 @@ class scanport:
 						if rcv[TCP].flags == 0x012:
 							print(" "*90, end="\r")
 							print(f"{port}/tcp aberta!")
-							
+class dirb:
+	def dirb():
+		def check(url):
+			with semaforo:
+				msg = f"Testando {url}"
+				print(msg, end="")
+				print(" "*len(msg), end="\r")
+				re = requests.head(url, allow_redirects=False)
+				code = re.status_code
+				if code in [301, 302]:
+					dirprint = f"+DIRETÓRIO: {url}/"
+					if url+"/" == re.headers.get("Location", ""):
+						re = requests.get(url+"/")
+						if re.status_code == 200:
+							html = re.text
+							if "<title>Index of" in html:
+								print(" "*len(msg), end="\r")
+								print(f"{dirprint}\n\u2514\u279E[INDEX OF]")
+							else:
+								print(dirprint)
+								pastas.append(url)
+					else:
+						print(dirprint)
+						pastas.append(url)
+						
+				elif code in [200, 403]:
+					print(" "*len(msg), end="\r")
+					print(f"{url} - CODE:{code}")
+		def looping(wordlist):
+			global semaforo 
+			semaforo = threading.Semaphore(3)
+			threads = []
+			for i in wordlist:
+				i = i.replace("\n", "")
+				url = f"{dominio}{i}"
+				t = threading.Thread(target=check, args=(url,))
+				threads.append(t)
+				t.start()
+			for tt in threads:
+				t.join()
+		os.system("clear")
+		logo = r"""
+____  _           _       
+|  _ \(_) ___  ___| |_ ___ 
+| | | | |/ _ \/ __| __/ __|
+| |_| | |  __/ (__| |_\__ \
+|____/|_|\___|\___|\__|___/
+		Scanner de Diretórios
+"""
+
+		print(logo)
+		dominio = input("Digite seu dominío: ")
+		os.system("clear")
+		linha = f"| Domain: {dominio}         |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(borda)
+		wordlist = "wordlist_subdomain.txt"
+		pastas = []
+		if dominio[:3] != "http":
+			dominio = "https://"+dominio
+		if dominio[-1] != "/":
+			dominio += "/"
+
+		with open(wordlist) as f:
+			wordlist = f.readlines()
+			looping(wordlist)
+			if len(pastas) >=1:
+				for pasta in pastas:
+					dominio = pasta + "/"
+				print(" "*60, end="\r")
+				input("Finalizado com sucesso!")
