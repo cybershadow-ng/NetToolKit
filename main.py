@@ -9,6 +9,7 @@ while True:
     print("|[1]- Chat Local                    |")
     print("|[2]- Scan Subdomain                |")      
     print("|[3]- Scanport                      |")
+    print("|[4]- Dirb                          |")
     print("|                                   |")
     print("|[99]- Sair                         |")    
     print("+-----------------------------------+")   
@@ -100,7 +101,9 @@ while True:
                 print("\033[F", end="")  
                 print(f"Esta opção não está disponível..")
                 time.sleep(2)
-    
+    elif opc_menu == 4:
+        dirb = class_main.dirb
+        dirb.dirb()
     elif opc_menu == 99:
         os.system("clear")
         exit()
