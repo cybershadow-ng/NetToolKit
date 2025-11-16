@@ -5,9 +5,12 @@ import dns.resolver #type:ignore
 class chatlocal:
 	def servidor():
 		os.system("clear")
-		print("+-------------------------------------------------+")
-		print(f"| IP LOCAL: [0.0.0.0] [127.0.0.1] [localhost]     |")
-		print("+-------------------------------------------------+\n")
+		linha = f"|     IP LOCAL: [0.0.0.0] [127.0.0.1] [localhost]     |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(f"{borda}\n")
 		ip = input("Digite seu IP: ")
 		port = int(input("Digite a porta: "))
 
@@ -19,9 +22,12 @@ class chatlocal:
 		con, client = s.accept()
 
 		os.system("clear")
-		print("+-----------------------------------+")
-		print(f"|     [+]Conectado ao {client[0]}     |")
-		print("+-----------------------------------+\n")
+		linha = f"|     [+]Conectado ao {client[0]}     |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(f"{borda}\n")
 		con.send("Digite a senha: ".encode())
 		senha = con.recv(1024)
 
@@ -47,9 +53,12 @@ class chatlocal:
 			senha = getpass.getpass(msg)
 			s.send(senha.encode())
 			os.system("clear")
-			print("+-------------------------------------+")
-			print(f"|   [+]Conectado ao {ip}      |")
-			print("+-------------------------------------+")
+			linha = f"|     [+]Conectado ao {ip}     |"
+			borda = "+" + "-"*(len(linha)-2) + "+"
+
+			print(borda)
+			print(linha)
+			print(f"{borda}\n")
 			while True:
 				print(f"\nAdmin: {s.recv(1024).decode()}")
 				msg = input(">> ")
@@ -94,9 +103,12 @@ class subdomain:
 		consultado = []
 		logs = {}
 		os.system("clear")
-		print("+-----------------------------------+")
-		print(f"| Domain: {dominio}                |")   
-		print("+-----------------------------------+")
+		linha = f"| Domain: {dominio}         |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(borda)
 		with open("wordlist_subdomain.txt") as wordlist:
 			for i in wordlist.readlines():
 				i = i.replace("\n", "")
@@ -129,9 +141,12 @@ class subdomain:
 		consultado = []
 		logs = {}
 		os.system("clear")
-		print("+-----------------------------------+")
-		print(f"| Domain: {dominio}                |")   
-		print("+-----------------------------------+\n")
+		linha = f"| Domain: {dominio}         |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(f"{borda}\n")
 		with open("wordlist_subdomain.txt") as wordlist:
 			for i in wordlist.readlines():
 				i = i.replace("\n", "")
@@ -190,9 +205,12 @@ class subdomain:
 		consultado = []
 		logs = {}
 		os.system("clear")
-		print("+-----------------------------------+")
-		print(f"| Domain: {dominio}                |")   
-		print("+-----------------------------------+")
+		linha = f"| Domain: {dominio}         |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(borda)
 		with open("wordlist_subdomain.txt") as wordlist:
 			for i in wordlist.readlines():
 				i = i.replace("\n", "")
@@ -219,14 +237,20 @@ class scanport:
 			os.system("clear")
 			dominio = input("Digite o domínio: ")
 			os.system("clear")
-			print("+-----------------------------------+")
-			print(f"| Domain: {dominio}                |")   
-			print("+-----------------------------------+")
+			linha = f"| Domain: {dominio}         |"
+			borda = "+" + "-"*(len(linha)-2) + "+"
+
+			print(borda)
+			print(linha)
+			print(borda)
 			for port in range(55356):
 				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				s.settimeout(0.1)
-				print(port)
+				msg = f"Testando porta {port}/65535.."
+				print(msg, end="")
+				print(" "*40, end="\r")
 				if s.connect_ex((dominio, port)) == 0:
+					print(" "*40, end="\r")
 					print(f"{port}/tcp encontrada!")
 				else:
 					None
@@ -237,14 +261,20 @@ class scanport:
 		os.system("clear")
 		dominio = input("Digite o domínio: ")
 		os.system("clear")
-		print("+-----------------------------------+")
-		print(f"| Domain: {dominio}                |")   
-		print("+-----------------------------------+")
+		linha = f"| Domain: {dominio}         |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(borda)
 		with open("wordlist_ports.txt") as wordlist:
 			for port in wordlist.readlines():
 				port = int(port)
 				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				s.settimeout(0.1)
+				msg = f"Testando porta {port}.."
+				print(msg, end="")
+				print(" "*40, end="\r")
 				if s.connect_ex((dominio, port)) == 0:
 					print(f"{port}/tcp encontrada!")
 				else:
@@ -255,13 +285,18 @@ class scanport:
 		os.system("clear")
 		host = input("Digite o domínio: ") 
 		os.system("clear")
-		print("+-----------------------------------+")
-		print(f"| Domain: {host}                |")   
-		print("+-----------------------------------+")
+		linha = f"| Domain: {host}         |"
+		borda = "+" + "-"*(len(linha)-2) + "+"
+
+		print(borda)
+		print(linha)
+		print(borda)
 		conf.L3socket = L3RawSocket
 		conf.verb = 0
-
 		for port in range(65536):
+			msg = f"Testando porta {port}/65535"
+			print(msg, end="")
+			print(" "*90, end="\r")
 			pacote_ip = IP(dst=host)
 			pacote_tcp = TCP(
 				dport = port, #A porta destino
@@ -277,4 +312,6 @@ class scanport:
 				for snd, rcv in pkg:
 					if rcv.haslayer(TCP):
 						if rcv[TCP].flags == 0x012:
+							print(" "*90, end="\r")
 							print(f"{port}/tcp aberta!")
+							
