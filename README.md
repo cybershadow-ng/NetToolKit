@@ -1,20 +1,27 @@
 # NetToolKit 🛠️
+
 Uma ferramenta multifuncional desenvolvida em **Python**, incluindo:
 
-- **Chat TCP local**: converse com outros dispositivos na sua rede.  
-- **Scanner de subdomínios**: descubra subdomínios de um domínio alvo.  
-- **Scan de portas**: verifique portas abertas em hosts de forma rápida.  
+- **Chat TCP local** — converse com outros dispositivos na sua rede.  
+- **Scanner de subdomínios** — descubra subdomínios de um domínio alvo.  
+- **Scanner de portas** — verifique portas abertas de forma rápida.  
+- **Scanner Dirb** — encontre diretórios e arquivos ocultos em servidores web.  
 
 > ⚠️ **Atenção:** Este projeto foi testado apenas em Linux.
 
 ---
 
 ## 🚀 Requisitos
+
 - Linux (qualquer distribuição moderna)  
 - Python 3.x  
 - pip3  
 
-> Este projeto depende das bibliotecas **dnspython** e **scapy**.
+Este projeto depende das seguintes bibliotecas:
+
+- `dnspython`  
+- `scapy`  
+- `requests`  
 
 ---
 
